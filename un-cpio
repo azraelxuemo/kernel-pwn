@@ -1,0 +1,16 @@
+#!/bin/bash
+me=${0##*/}
+if	[ $# -ne 1  ]
+then
+	echo "Usage: $me <rootfs-cpio>" >&2
+	echo "Notice: please use this script in a empty dir where the file system will be decompressed" >&2
+	exit 2
+fi
+wholepath="`pwd`/$1"
+path=$(dirname $wholepath)
+file=$(basename $wholepath)
+cd $path
+mv $file "${file}.gz"
+gunzip "${file}.gz"
+cpio -idm < $file
+rm $file
