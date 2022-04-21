@@ -1,0 +1,9 @@
+#!/bin/bash
+me=${0##*/}
+if	[ $# -ne 1  ]
+then
+	echo "Usage: $me <output-cpio>" >&2
+	exit 2
+fi
+
+find . -print0 |cpio --null -o --format=newc |gzip -9 > $1
